@@ -1,0 +1,20 @@
+3
+5
+declare
+cancel 1
+declare
+cancel 2
+cancel 3
+4
+declare
+cancel 1
+cancel 1
+cancel 1
+4
+declare
+cancel 1
+cancel 2
+cancel 3
+1 4 5
+
+
