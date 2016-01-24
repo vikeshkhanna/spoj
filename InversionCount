@@ -1,0 +1,83 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+public class MergeSort 
+{
+	static long count=0;
+	public void sort(int input[]) {
+		sort(input, 0, input.length - 1);
+	}
+
+	private void sort(int input[], int low, int high) {
+		if (low >= high) {
+			return;
+		}
+
+		int middle = (low + high) / 2;
+		sort(input, low, middle);
+		sort(input, middle + 1, high);
+		sortedMerge(input, low, high);
+	}
+
+	private void sortedMerge(int input[], int low, int high)
+	{
+		int middle = (low + high) / 2;
+		int temp[] = new int[high - low + 1];
+		int i = low;
+		int j = middle + 1;
+		int r = 0;
+		while (i <= middle && j <= high) {
+			if (input[i] <= input[j]) 
+			{
+				temp[r++] = input[i++];
+				
+			} else
+			{
+				temp[r++] = input[j++];
+				count+=middle+1-i; 
+			}
+		}
+		while (i <= middle) {
+			temp[r++] = input[i++];
+		}
+
+		while (j <= high) {
+			temp[r++] = input[j++];
+		}
+		i = low;
+		for (int k = 0; k < temp.length;) {
+			input[i++] = temp[k++];
+		}
+	}
+
+	public void printArray(int input[]) 
+	{
+		for (int i : input) {
+			System.out.print(i + " ");
+		}
+		System.out.println();
+	}
+
+	public static void main(String args[])throws Exception
+	{
+		BufferedReader s =new BufferedReader(new InputStreamReader(System.in));
+		int t=Integer.parseInt(s.readLine());
+		int inp[],n;
+		MergeSort ms;
+		for(int i=0;i<t;i++)
+		{
+			s.readLine();
+			n=Integer.parseInt(s.readLine());
+			inp=new int[n];
+			for(int j=0;j<n;j++)
+			{
+				inp[j]=Integer.parseInt(s.readLine());
+			}
+		
+		ms = new MergeSort();
+		ms.sort(inp);
+		System.out.println(count);
+		count=0;
+		}
+	}
+}
