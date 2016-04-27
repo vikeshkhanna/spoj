@@ -1,0 +1,29 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+ 
+int t;
+cin>>t;
+for(int e=1;e<=t;e++)
+    {
+    int s,n,a,b,count=0;
+    cin>>n;
+    for(int i=1;i<=n;i++)
+        {
+        cin>>a>>b;
+        if(count<(a*a+b*b))
+            {
+            count=a*a+b*b;
+            s=i;
+            }
+        }
+    cout<<"Case "<<e<<": "<<s<<endl;
+ 
+ 
+}
+ 
+ 
+ 
+return 0;
+}
