@@ -1,0 +1,89 @@
+	package chocolate;
+	
+	import java.io.BufferedReader;
+	import java.io.InputStreamReader;
+	import java.util.Arrays;
+	
+	public class Chocolate 
+	{
+		public static void main(String args[]) throws Exception
+		{
+			BufferedReader s=new BufferedReader(new InputStreamReader(System.in));
+			int t=Integer.parseInt(s.readLine());
+			
+			for(int i=0;i<t;i++)
+			{
+				s.readLine();
+				String inp[]=s.readLine().split(" ");
+				int X=Integer.parseInt(inp[0]);
+				int Y=Integer.parseInt(inp[1]);
+				X--;
+				Y--;
+				int x[]=new int[X];
+				int y[]=new int[Y];
+				for(int j=0;j<X;j++)
+				{
+					x[j]=-Integer.parseInt(s.readLine());
+				}
+	
+				for(int j=0;j<Y;j++)
+				{
+					y[j]=-Integer.parseInt(s.readLine());
+				}
+				Arrays.sort(x);
+				Arrays.sort(y);
+				int xcount=0;
+				int ycount=0;
+				long ans=0;
+				while(xcount!=X && ycount!=Y)
+				{
+					if(-x[xcount]>-y[ycount])
+					{
+						ans+=(ycount+1)*x[xcount];
+						xcount++;
+					}
+					else if(-x[xcount]<-y[ycount])
+					{
+						ans+=(xcount+1)*y[ycount];
+						ycount++;
+					}
+					else
+					{
+						if(xcount>ycount)
+						{
+							ans+=(xcount+1)*y[ycount];
+							ycount++;
+						}
+						else
+						{
+							ans+=(ycount+1)*x[xcount];
+							xcount++;
+						}
+	
+					}
+	
+	
+				}
+				if(xcount==X)
+				{
+					while(ycount!=Y)
+					{
+						ans+=(xcount+1)*y[ycount];
+						ycount++;
+					}
+				}
+				else
+				{
+					while(xcount!=X)
+					{
+						ans+=(ycount+1)*x[xcount];
+						xcount++;
+					
+					}
+				}
+	
+				System.out.println(-ans);
+			}
+			
+		}
+	}

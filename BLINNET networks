@@ -1,0 +1,141 @@
+	import java.io.BufferedReader;
+	import java.io.IOException;
+	import java.io.InputStreamReader;
+	import java.util.List;
+	import java.util.PriorityQueue;
+	 public class Tester
+	 {
+	    public static void main(String args[]) throws NumberFormatException, IOException
+	    {
+	            
+	        BufferedReader s = new BufferedReader(new InputStreamReader(System.in));
+	        int t=Integer.parseInt(s.readLine());
+	        for(int l=0;l<t;l++)
+	        {
+	        	PriorityQueue<Edge> pq=new PriorityQueue<Edge>();
+	        	s.readLine();
+	        	int num=Integer.parseInt(s.readLine());
+	        	DisjointUnionSets ds=new DisjointUnionSets(num);
+	            
+	        	for(int i=0;i<num;i++)
+	        	{
+	        		s.readLine(); //name of city
+	        		int lines=Integer.parseInt(s.readLine());
+	        		for(int j=0;j<lines;j++)
+	        		{
+	        			String[] line = s.readLine().split(" "); 
+	        			int b = Integer.parseInt(line[0]);
+	        			int c = Integer.parseInt(line[1]);
+	        		
+	        			Edge e=new Edge(i,b-1,c);
+	        			pq.add(e);
+	        		}
+	        	}
+	    		long ans=0;
+	            while(!pq.isEmpty())
+	            {	
+	            	Edge e=pq.poll();
+	            	if(ds.findSet(e.v1)!=ds.findSet(e.v2))
+	            	{
+	            		ds.union(e.v1,e.v2);
+	            		//In case of minimum spanning tree we add the weights of the edges
+	            		ans+=e.getWeight();
+	            	}
+	           }
+	        		
+	           System.out.println(ans);
+	         }
+	        
+	        
+	    }
+	 }
+	    class Edge implements Comparable<Edge>{
+	    	public int v1,v2,weight;
+	    	Edge(int v1,int v2,int weight){
+	    		this.v1 = v1;
+	    		this.v2= v2;
+	    		this.weight=weight;
+	    	}
+	    	
+	    	public int getV1() {
+	    		return v1;
+	    	}
+	    	public void setV1(int v1) {
+	    		this.v1 = v1;
+	    	}
+	    	public int getV2() {
+	    		return v2;
+	    	}
+	    	public void setV2(int v2) {
+	    		this.v2 = v2;
+	    	}
+	    	public int getWeight() {
+	    		return weight;
+	    	}
+	    	public void setWeight(int weight) {
+	    		this.weight = weight;
+	    	}
+	    	  @Override
+	          public int compareTo(Edge edge) 
+	          {
+	    		  return -(edge.getWeight()-this.weight);
+	          }
+	    }	  
+	     
+	     class DisjointUnionSets 
+	     {
+	    	
+	    	int[] rank, parent;
+	    	int n;
+	    	
+	    	public DisjointUnionSets(int n) 
+	    	{
+	    		rank = new int[n];
+	    		parent = new int[n];
+	    		this.n=n;
+	    		makeSet();
+	    	}
+	    	
+	    	void makeSet() 
+	    	{
+	    		
+	    		for(int i=0;i<n;i++)
+	    		{  // Initially, all elements are in their own set.
+	    			parent[i] = i;
+	    		}
+	    	}
+	    	
+	    	int findSet(int x)
+	    	{ 
+	    		if(parent[x]!=x)
+	    		{ 
+	    			
+	    			parent[x] = findSet(parent[x]);
+	    		}
+	    			
+	    		return parent[x];
+	    	}
+	    	
+	    	void union(int x, int y)
+	    	{ 	
+	    		int xRoot = findSet(x); 
+	    		int yRoot = findSet(y); 
+	    		if(xRoot == yRoot)  
+	    			return;
+	    		if(rank[xRoot]<rank[yRoot]){ 
+	    			parent[xRoot] = yRoot; 
+	    		}
+	    		
+	    		else if(rank[yRoot]<rank[xRoot]){ 
+	    			parent[yRoot] = xRoot; 
+	    		}
+	    		
+	    		else{
+	    			parent[yRoot] = xRoot; 
+	    			rank[xRoot] = rank[xRoot] + 1;  
+	    		}
+	    	}
+	     
+	    } 
+	
+	
